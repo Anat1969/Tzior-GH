@@ -1,0 +1,11 @@
+// אייקון האפליקציה: חלון. שדה כהה, פס אור אנכי, וצל שנופל באלכסון. בלי טקסט.
+export function AppMark({ size = 30 }: { size?: number }) {
+  return (
+    <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true">
+      <rect width="64" height="64" fill="#17181b" />
+      <polygon points="36,10 44,10 58,54 50,54" fill="#2f3b57" />
+      <rect x="28" y="10" width="8" height="44" fill="#e9b45a" />
+      <rect x="10" y="54" width="44" height="2" fill="#f8f5ee" opacity="0.5" />
+    </svg>
+  )
+}

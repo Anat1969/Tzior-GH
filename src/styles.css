@@ -1,0 +1,143 @@
+/* ציור שמגלה חוזקה. שכבה קבועה (anat-design-language) ותעודת DNA: חלון של אור וצל. */
+:root {
+  --ink: #17181b;
+  --ink-2: #3a3d44;
+  --mute: #6d7079;
+  --rule: #d9d6cf;
+  --rule-soft: #f0eee9;
+  --paper: #ffffff;
+  --sheet: #f8f5ee;
+  /* צבעי התעודה: צבעי תפקיד, לא רקעים */
+  --light: #a8701a; /* אור־אוכרה: חוזקה */
+  --light-soft: #f6ead2;
+  --umbra: #2f3b57; /* כחול־צל: צל */
+  --umbra-soft: #e3e7f0;
+  --dormant: #9a958c; /* אפור־נייר: רדום */
+  --dormant-soft: #efede8;
+  --problem: #b3261e;
+  --solution: #2e7d4f;
+  --marker: #fff0a0;
+  --shadow-1: 0 1px 2px rgba(20, 20, 30, 0.08), 0 2px 6px rgba(20, 20, 30, 0.06);
+  --shadow-2: 0 2px 4px rgba(20, 20, 30, 0.08), 0 8px 24px rgba(20, 20, 30, 0.1);
+  --sans: 'IBM Plex Sans Hebrew', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', 'IBM Plex Sans Hebrew', monospace;
+  --bar: 56px;
+  --actions: 60px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  direction: rtl;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+mark, .hl { background: linear-gradient(transparent 35%, var(--marker) 35%); color: inherit; padding: 0 2px; }
+b, strong { font-weight: 700; }
+.mono { font-family: var(--mono); }
+.label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.01em; color: var(--mute); }
+.muted { color: var(--mute); }
+.small { font-size: 13px; }
+
+/* ---------- סרגל עליון ---------- */
+.topbar {
+  position: fixed; inset: 0 0 auto 0; height: var(--bar); z-index: 50;
+  background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(8px);
+  box-shadow: 0 1px 0 var(--rule);
+}
+.topbar-inner { height: 100%; max-width: 1400px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 20px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.brand svg { width: 30px; height: 30px; }
+.brand-name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.nav { display: flex; gap: 4px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.nav a { text-decoration: none; padding: 8px 12px; font-size: 14px; color: var(--ink-2); white-space: nowrap; transition: background 0.15s; }
+.nav a:hover { background: var(--rule-soft); }
+.nav a.active { color: var(--ink); font-weight: 700; box-shadow: inset 0 -2px 0 var(--light); }
+.logo-slot { flex-shrink: 0; margin-inline-start: auto; }
+
+main { padding-top: var(--bar); }
+.page { max-width: 1400px; margin: 0 auto; padding: 24px 16px calc(var(--actions) + 32px); }
+
+/* ---------- כפתורים: מרובעים, לחיצים, סמויים ---------- */
+.btn {
+  font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  border: 1px solid transparent; border-radius: 0;
+  background: var(--rule-soft); color: var(--ink);
+  padding: 10px 16px; box-shadow: var(--shadow-1);
+  transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+  text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-2); }
+.btn:active { transform: translateY(1px); box-shadow: none; }
+.btn:focus-visible, .chip:focus-visible, a:focus-visible { outline: 2px solid var(--light); outline-offset: 2px; }
+.btn.primary { background: var(--ink); color: #fff; }
+.btn.light { background: var(--light); color: #fff; }
+.btn[disabled] { opacity: 0.4; pointer-events: none; }
+.chip {
+  font: inherit; font-size: 13px; cursor: pointer; border: 1px solid transparent; border-radius: 0;
+  background: var(--rule-soft); padding: 4px 10px; box-shadow: var(--shadow-1); color: var(--ink);
+  transition: transform 0.12s;
+}
+.chip:hover { transform: translateY(-1px); }
+.chip:active { transform: translateY(1px); }
+.chip[aria-pressed='true'] { background: var(--ink); color: #fff; }
+
+/* ---------- סרגל פעולות קבוע ---------- */
+.actions {
+  position: fixed; inset: auto 0 0 0; height: var(--actions); z-index: 40;
+  background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(8px); box-shadow: 0 -1px 0 var(--rule);
+}
+.actions-inner { max-width: 1400px; height: 100%; margin: 0 auto; padding: 0 16px; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 8px; align-items: center; }
+.actions-inner .btn { width: 100%; padding: 10px 6px; }
+
+/* ---------- טיפוגרפיה של תובנה ---------- */
+.kicker { font-family: var(--mono); font-size: 12px; color: var(--mute); }
+.h-insight { font-size: clamp(26px, 3.6vw, 44px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+.h-sec { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.big-num { font-family: var(--mono); font-weight: 600; font-size: clamp(40px, 5vw, 64px); line-height: 1; letter-spacing: -0.03em; }
+.lines > * { display: block; }
+.card { background: var(--paper); box-shadow: var(--shadow-1); padding: 16px; }
+.grid { display: grid; gap: 16px; }
+.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 860px) {
+  .cols-3, .cols-2 { grid-template-columns: minmax(0, 1fr); }
+  .nav a { padding: 8px 8px; }
+  .brand-name { display: none; }
+}
+
+/* ---------- צבעי משמעות ---------- */
+.z-strength { --z: var(--light); --z-soft: var(--light-soft); }
+.z-shadow { --z: var(--umbra); --z-soft: var(--umbra-soft); }
+.z-dormant { --z: var(--dormant); --z-soft: var(--dormant-soft); }
+.box-problem { border-top: 3px solid var(--problem); }
+.box-solution { border-top: 3px solid var(--solution); }
+.box-insight { border-top: 3px solid #d9b800; }
+
+/* ---------- חשיפה: אור שעובר על הדף ---------- */
+@keyframes reveal { from { clip-path: inset(0 0 0 100%); opacity: 0.2; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+.reveal { animation: reveal 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.reveal.d1 { animation-delay: 0.15s; }
+.reveal.d2 { animation-delay: 0.3s; }
+.reveal.d3 { animation-delay: 0.45s; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- סקאלת שביל הזהב ---------- */
+.scale { position: relative; height: 14px; display: grid; }
+.scale-zones { position: absolute; inset: 0; display: flex; }
+.scale-zones span { height: 100%; }
+.scale-marker { position: absolute; top: -5px; width: 3px; height: 24px; background: var(--ink); transform: translateX(50%); }
+.scale-marker::after { content: ''; position: absolute; top: -4px; right: -3px; width: 9px; height: 9px; background: var(--ink); transform: rotate(45deg); }
+
+@media print {
+  .topbar, .actions, .no-print { display: none !important; }
+  main { padding: 0; }
+  .page { padding: 0; }
+}
