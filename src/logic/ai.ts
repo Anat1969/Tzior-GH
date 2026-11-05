@@ -24,6 +24,9 @@ export function localText(r: Revelation, d: Directive): AiText {
   }
 }
 
+// מודל חינמי מכניס לפעמים אות ערבית או לטינית בודדת לתוך מילה עברית (נצפה: "האיزון"). מסירים אותיות ערביות.
+const clean = (t: string) => t.replace(/[\u0600-\u06FF\u0750-\u077F]+/g, '').replace(/\s{2,}/g, ' ').trim()
+
 export async function aiText(r: Revelation, d: Directive): Promise<AiText> {
   const payload = {
     directive: { title: d.title, question: d.question },
@@ -43,7 +46,7 @@ export async function aiText(r: Revelation, d: Directive): Promise<AiText> {
     if (!res.ok) throw new Error(String(res.status))
     const j = await res.json()
     if (!j.insight || !Array.isArray(j.questions)) throw new Error('bad')
-    return { insight: j.insight, explanation: j.explanation ?? '', questions: j.questions.slice(0, 3), haiku: Array.isArray(j.haiku) ? j.haiku.slice(0, 3) : [], by: j.by === 'claude' ? 'claude' : 'gemini' }
+    return { insight: clean(j.insight), explanation: clean(j.explanation ?? ''), questions: j.questions.slice(0, 3).map(clean), haiku: Array.isArray(j.haiku) ? j.haiku.slice(0, 3).map(clean) : [], by: j.by === 'claude' ? 'claude' : 'gemini' }
   } catch {
     return localText(r, d)
   }
